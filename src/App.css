@@ -1,12 +1,4 @@
 .App {
-  text-align: center;
-}
-
-.Message {
-  color:brown;
-}
-
-.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
