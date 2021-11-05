@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AUTHORS } from '../utils/constants';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import Input from '@mui/material/Input';
 
-export const Form = ({onSendMessage}) => {
+export const Form = ({ onSendMessage }) => {
     const [value, setValue] = useState('');
     const handleChange = (e) => {
         setValue(e.target.value)
@@ -19,8 +22,10 @@ export const Form = ({onSendMessage}) => {
     }
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Type here..." value={value} onChange={handleChange} />
-            <input type="submit" />
+            <Input placeholder="Type here..." value={value} onChange={handleChange} />
+            <Button size="small" type="submit" variant="contained" endIcon={<SendIcon />}>
+                Send
+            </Button>
         </form>
     );
 }
