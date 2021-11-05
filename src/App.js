@@ -10,7 +10,7 @@ export default function App() {
 
     const handleSendMessage = useCallback((newMessage) => {
         setMessages(prevMessages => [...prevMessages, newMessage])
-    }, [messages])
+    }, [])
     useEffect(() => {
         if (messages.length && messages[messages.length - 1].author !== AUTHORS.bot) {
             const  timeout = setTimeout(() => {
