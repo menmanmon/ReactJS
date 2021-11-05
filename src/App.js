@@ -13,7 +13,7 @@ export default function App() {
     }, [])
     useEffect(() => {
         if (messages.length && messages[messages.length - 1].author !== AUTHORS.bot) {
-            const  timeout = setTimeout(() => {
+            const timeout = setTimeout(() => {
                 handleSendMessage({
                     author: AUTHORS.bot,
                     text: 'hi from bot',
