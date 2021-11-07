@@ -1,0 +1,13 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.chatsList {
+  padding-right: 50px;
+  display: flex;
+  flex-direction: column;
+}
