@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Form } from './components/Form';
 import { MessageList } from './components/MessageList';
+import { ChatsList } from './components/ChatsList';
 import { AUTHORS } from './utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -24,10 +25,14 @@ export default function App() {
         }
     }, [messages])
     return (
-        <div className="App">
-            <MessageList messages={messages} />
-            <Form onSendMessage={handleSendMessage} />
+        <div className="app">
+            <ChatsList/>
+            <div className="chat">
+                <MessageList messages={messages} />
+                <Form onSendMessage={handleSendMessage} />
+            </div>
         </div>
     );
+
 }
 
