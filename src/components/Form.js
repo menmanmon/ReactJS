@@ -25,9 +25,7 @@ export const Form = ({ onSendMessage }) => {
     }, [handleSubmit]);
     return (
         <form onSubmit={handleSubmit}>
-            {/* почему-то не фокусируется на инпуте им mui */}
-            {/* <Input autoFocus ref={inputRef} placeholder="Type here..." value={value} onChange={handleChange} /> */}
-            <input ref={inputRef} placeholder="Type here..." value={value} onChange={handleChange} />
+            <Input autoFocus inputRef={inputRef} placeholder="Type here..." value={value} onChange={handleChange} />
             <Button size="small" type="submit" variant="contained" endIcon={<SendIcon />}>
                 Send
             </Button>
