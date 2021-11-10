@@ -1,38 +1,28 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Form } from './components/Form';
-import { MessageList } from './components/MessageList';
+import React from 'react';
+import { Chats } from './components/Chats';
 import { ChatsList } from './components/ChatsList';
-import { AUTHORS } from './utils/constants';
-import { v4 as uuidv4 } from 'uuid';
-import './App.css';
+import { Home } from './components/Home';
+import { Route, Routes } from 'react-router';
+import { BrowserRouter, Link } from 'react-router-dom';
 
-export default function App() {
-    const [messages, setMessages] = useState([]);
-
-    const handleSendMessage = useCallback((newMessage) => {
-        setMessages(prevMessages => [...prevMessages, newMessage])
-    }, [])
-    useEffect(() => {
-        if (messages.length && messages[messages.length - 1].author !== AUTHORS.bot) {
-            const timeout = setTimeout(() => {
-                handleSendMessage({
-                    author: AUTHORS.bot,
-                    text: 'hi from bot',
-                    id: uuidv4(),
-                })
-            }, 1500);
-            return () => clearTimeout(timeout);
-        }
-    }, [messages])
+export const App = () => {
     return (
-        <div className="app">
-            <ChatsList/>
-            <div className="chat">
-                <MessageList messages={messages} />
-                <Form onSendMessage={handleSendMessage} />
-            </div>
-        </div>
+        <BrowserRouter>
+            <ul>
+                <li>
+                    <Link to='/'>Home</Link>
+                </li>
+                <li>
+                    <Link to='/chats'>Chats</Link>
+                </li>
+            </ul>
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='chats'>
+                    <Route index element={<ChatsList />} />
+                    <Route path=':chatId' element={<Chats />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
-
 }
-

@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { AUTHORS } from '../utils/constants';
+import { AUTHORS } from '../../utils/constants';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@mui/material/Input';
