@@ -18,11 +18,9 @@ export const Form = ({ onSendMessage }) => {
             id: uuidv4(),
         })
         setValue('');
+        inputRef.current?.focus();
     }
     const inputRef = useRef(null)
-    useEffect(() => {
-        inputRef.current?.focus();
-    }, [handleSubmit]);
     return (
         <form onSubmit={handleSubmit}>
             <Input autoFocus inputRef={inputRef} placeholder="Type here..." value={value} onChange={handleChange} />
