@@ -5,7 +5,7 @@ import { ChatsList } from '../ChatsList';
 import { AUTHORS } from '../../utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 import './Chats.css';
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 
 const initialMessages = {
     chat1: [
@@ -16,7 +16,7 @@ const initialMessages = {
     ],
     chat2: [
         {
-            text: 'text1',
+            text: 'text2',
             author: AUTHORS.human,
         }
     ],
@@ -26,12 +26,13 @@ const initialMessages = {
 export const Chats = () => {
     const { chatId } = useParams();
     const [messages, setMessages] = useState(initialMessages);
+    // console.log(Object.keys(initialMessages).slice(-1).join().match(/\d+$/gi).join());
 
     const handleSendMessage = useCallback((newMessage) => {
         setMessages(prevMessages => ({ ...prevMessages, [chatId]: [...prevMessages[chatId], newMessage] }))
-    }, [chatId])
+    }, [chatId]);
     useEffect(() => {
-        if (messages[chatId].length && messages[chatId][messages[chatId].length - 1].author !== AUTHORS.bot) {
+        if (messages[chatId]?.length && messages[chatId]?.[messages[chatId]?.length - 1].author !== AUTHORS.bot) {
             const timeout = setTimeout(() => {
                 handleSendMessage({
                     author: AUTHORS.bot,
@@ -41,16 +42,22 @@ export const Chats = () => {
             }, 1500);
             return () => clearTimeout(timeout);
         }
-    }, [messages])
+    }, [messages]);
+    if (!messages[chatId]) {
+        return <Navigate replace to='/chats' />
+    }
+    const onAddChatClick = () => {
+        let lastChatNumber = Object.keys(initialMessages).slice(-1).join().match(/\d+$/gi).join()
+        setMessages(() => initialMessages.push({ "Жопа": [] }))
+    };
     return (
         <div className="app">
-            <ChatsList />
+            <ChatsList onAddChatClick={onAddChatClick} />
             <div className="chat">
                 <MessageList messages={messages[chatId]} />
                 <Form onSendMessage={handleSendMessage} />
             </div>
         </div>
     );
-
 }
 

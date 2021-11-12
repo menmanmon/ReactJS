@@ -4,6 +4,7 @@ import { ChatsList } from './components/ChatsList';
 import { Home } from './components/Home';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter, Link } from 'react-router-dom';
+import { Profile } from './components/Profile';
 
 export const App = () => {
     return (
@@ -15,6 +16,9 @@ export const App = () => {
                 <li>
                     <Link to='/chats'>Chats</Link>
                 </li>
+                <li>
+                    <Link to='/profile'>Profile</Link>
+                </li>
             </ul>
             <Routes>
                 <Route path='/' element={<Home />} />
@@ -22,6 +26,8 @@ export const App = () => {
                     <Route index element={<ChatsList />} />
                     <Route path=':chatId' element={<Chats />} />
                 </Route>
+                <Route path='/profile' element={<Profile />} />
+                <Route path='*' element={<h3>404</h3>} />
             </Routes>
         </BrowserRouter>
     );

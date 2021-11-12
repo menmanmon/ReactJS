@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import CustomButton from '@mui/material/Button';
 
-export const ChatsList = () => {
+export const ChatsList = (props) => {
     const [chats, setChats] = useState([
         {
             name: 'chat 1',
@@ -19,7 +20,8 @@ export const ChatsList = () => {
     const chat = chats.map((chat) => <Link to={`/chats/${chat.id}`} key={chat.id}>{chat.name}</Link>)
     return (
         <div>
-            <h3>Chats List</h3> 
+            <h3>Chats List</h3>
+            <CustomButton onClick={props.onAddChatClick} >Add chat</CustomButton>
             <ul className="chatsList">
                 {chat}
             </ul>
