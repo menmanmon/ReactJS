@@ -47,12 +47,13 @@ export const Chats = () => {
     }
     const onAddChatClick = () => {
         let lastChatNumber = Object.keys(initialMessages).slice(-1).join().match(/\d+$/gi).join();
-        let newId = lastChatNumber + 1;
-        setMessages((oldChats) => ({ ...oldChats, [newId]: [] }))
+        let newChatId = `chat${+lastChatNumber + 1}`;
+        console.log(newChatId);
+        setMessages((oldChats) => ({ ...oldChats, newChatId: ['new chat'] }))
     };
     return (
         <div className="app">
-            <ChatsList onClick={onAddChatClick} />
+            <ChatsList onAddChatClick={onAddChatClick} />
             <div className="chat">
                 <MessageList messages={messages[chatId]} />
                 <Form onSendMessage={handleSendMessage} />
