@@ -26,7 +26,6 @@ const initialMessages = {
 export const Chats = () => {
     const { chatId } = useParams();
     const [messages, setMessages] = useState(initialMessages);
-    // console.log(Object.keys(initialMessages).slice(-1).join().match(/\d+$/gi).join());
 
     const handleSendMessage = useCallback((newMessage) => {
         setMessages(prevMessages => ({ ...prevMessages, [chatId]: [...prevMessages[chatId], newMessage] }))
@@ -47,12 +46,13 @@ export const Chats = () => {
         return <Navigate replace to='/chats' />
     }
     const onAddChatClick = () => {
-        let lastChatNumber = Object.keys(initialMessages).slice(-1).join().match(/\d+$/gi).join()
-        setMessages(() => initialMessages.push({ "Жопа": [] }))
+        let lastChatNumber = Object.keys(initialMessages).slice(-1).join().match(/\d+$/gi).join();
+        let newId = lastChatNumber + 1;
+        setMessages((oldChats) => ({ ...oldChats, [newId]: [] }))
     };
     return (
         <div className="app">
-            <ChatsList onAddChatClick={onAddChatClick} />
+            <ChatsList onClick={onAddChatClick} />
             <div className="chat">
                 <MessageList messages={messages[chatId]} />
                 <Form onSendMessage={handleSendMessage} />
