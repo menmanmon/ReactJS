@@ -7,28 +7,13 @@ import { v4 as uuidv4 } from 'uuid';
 import './Chats.css';
 import { Navigate, useParams } from 'react-router';
 
-const initialMessages = {
-    chat1: [
-        {
-            text: 'text1',
-            author: AUTHORS.human,
-        }
-    ],
-    chat2: [
-        {
-            text: 'text2',
-            author: AUTHORS.human,
-        }
-    ],
-    chat3: [],
-};
-
-export const Chats = () => {
+export const Chats = ({ chatsList, setChatsList, messages, setMessages, onAddChat, onDeleteChat }) => {
     const { chatId } = useParams();
-    const [messages, setMessages] = useState(initialMessages);
 
     const handleSendMessage = useCallback((newMessage) => {
-        setMessages(prevMessages => ({ ...prevMessages, [chatId]: [...prevMessages[chatId], newMessage] }))
+        setMessages(prevMessages => ({
+            ...prevMessages, [chatId]: [...prevMessages[chatId], newMessage]
+        }));
     }, [chatId]);
     useEffect(() => {
         if (messages[chatId]?.length && messages[chatId]?.[messages[chatId]?.length - 1].author !== AUTHORS.bot) {
@@ -45,15 +30,14 @@ export const Chats = () => {
     if (!messages[chatId]) {
         return <Navigate replace to='/chats' />
     }
-    const onAddChatClick = () => {
-        let lastChatNumber = Object.keys(initialMessages).slice(-1).join().match(/\d+$/gi).join();
-        let newChatId = `chat${+lastChatNumber + 1}`;
-        console.log(newChatId);
-        setMessages((oldChats) => ({ ...oldChats, newChatId: ['new chat'] }))
-    };
     return (
         <div className="app">
-            <ChatsList onAddChatClick={onAddChatClick} />
+            <ChatsList
+                onAddChat={onAddChat}
+                onDeleteChat={onDeleteChat}
+                chatsList={chatsList}
+                setChatsList={setChatsList}
+            />
             <div className="chat">
                 <MessageList messages={messages[chatId]} />
                 <Form onSendMessage={handleSendMessage} />
