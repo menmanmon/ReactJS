@@ -4,6 +4,7 @@ import CustomButton from '@mui/material/Button';
 import './ChatsList.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addChat, deleteChat } from '../../store/chats/actions';
+import { addEmptyMessage } from '../../store/messages/actions';
 
 export const ChatsList = ({ chatsList, onAddChat, onDeleteChat }) => {
     const state = useSelector(state => state)
@@ -21,6 +22,7 @@ export const ChatsList = ({ chatsList, onAddChat, onDeleteChat }) => {
             id: newId
         };
         dispatch(addChat(newChat));
+        dispatch(addEmptyMessage(newId));
         setValue('');
     }
     const chat = state.chats.map((chat) =>

@@ -4,19 +4,35 @@ import { AUTHORS } from '../../utils/constants';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@mui/material/Input';
+import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { addMessage } from '../../store/messages/actions';
 
 export const Form = ({ onSendMessage }) => {
+    const { chatId } = useParams();
+    const state = useSelector(state => state);
+    const dispatch = useDispatch();
+
     const [value, setValue] = useState('');
     const handleChange = (e) => {
         setValue(e.target.value)
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSendMessage({
-            text: value,
-            author: AUTHORS.human,
-            id: uuidv4(),
-        })
+        // onSendMessage({
+        //     text: value,
+        //     author: AUTHORS.human,
+        //     id: uuidv4(),
+        // })
+        dispatch(addMessage({
+            info:
+            {
+                text: value,
+                author: AUTHORS.human,
+                messageId: uuidv4(),
+            },
+            chatId: chatId,
+        }))
         setValue('');
         inputRef.current?.focus();
     }
