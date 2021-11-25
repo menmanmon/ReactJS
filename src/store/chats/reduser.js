@@ -1,8 +1,8 @@
 import { ADD_CHAT, DELETE_CHAT } from "./actions"
 
-const initialState = [];
+const initialChats = [];
 
-export const chatsReduser = (state = initialState, { type, payload }) => {
+export const chatsReduser = (state = initialChats, { type, payload }) => {
     switch (type) {
         case ADD_CHAT:
             return [...state, payload];

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { changeName, toggleCheckbox } from '../../store/profile/actions';
+import { getPrifile } from '../../store/selectors';
 
 export const Profile = () => {
-    const state = useSelector(state => state);
+    const state = useSelector(getPrifile, shallowEqual);
     const [value, setValue] = useState(state.name)
     const dispatch = useDispatch();
 
@@ -20,7 +21,7 @@ export const Profile = () => {
     return (
         <div>
             <h3>Profile</h3>
-            <input type="checkbox" checked={state.checkBox} onChange={handleChange} />
+            <input type="checkbox" checked={state.checkbox} onChange={handleChange} />
             <form onSubmit={handleSubmit}>
                 <input type="text" value={value} onChange={handleChangeText}></input>
                 <input type="submit"></input>

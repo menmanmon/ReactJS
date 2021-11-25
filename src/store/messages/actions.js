@@ -5,7 +5,7 @@ export const addMessage = (newMessageInfo) => ({
     type: ADD_MESSAGE,
     payload: newMessageInfo,
 })
-export const addEmptyMessage = (id) => ({
+export const addEmptyMessage = (ChatId) => ({
     type: ADD_EMPTY_MESSAGE,
-    payload: id,
+    payload: ChatId,
 })
