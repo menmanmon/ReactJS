@@ -1,19 +1,6 @@
 import { ADD_EMPTY_MESSAGE, ADD_MESSAGE } from "./actions";
 
-const initialState = {
-    chat12: [
-        {
-            text: 'text1',
-            author: "AUTHORS.human",
-        }
-    ],
-    chat13: [
-        {
-            text: 'text112',
-            author: "AUTHORS.human",
-        }
-    ],
-};
+const initialState = {};
 
 export const messagesReduser = (state = initialState, { type, payload }) => {
 

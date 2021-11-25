@@ -6,16 +6,17 @@ import { AUTHORS } from '../../utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 import './Chats.css';
 import { Navigate, useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addMessage } from '../../store/messages/actions';
+import { getMessagesList } from '../../store/selectors';
 
 export const Chats = () => {
     const { chatId } = useParams();
-    const state = useSelector(state => state);
+    const messages = useSelector(getMessagesList, shallowEqual);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (state.messages[chatId]?.length && state.messages[chatId]?.[state.messages[chatId]?.length - 1].author !== AUTHORS.bot) {
+        if (messages[chatId]?.length && messages[chatId]?.[messages[chatId]?.length - 1].author !== AUTHORS.bot) {
             const timeout = setTimeout(() => {
                 dispatch(addMessage({
                     text: 'hi from bot',
@@ -27,7 +28,7 @@ export const Chats = () => {
             return () => clearTimeout(timeout);
         }
     });
-    if (!state.messages[chatId]) {
+    if (!messages[chatId]) {
         return <Navigate replace to='/chats' />
     }
     return (
