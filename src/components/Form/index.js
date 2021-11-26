@@ -6,7 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Input from '@mui/material/Input';
 import { useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '../../store/messages/actions';
+import { addMessageWithThunk } from '../../store/messages/actions';
 
 export const Form = () => {
     const { chatId } = useParams();
@@ -18,7 +18,7 @@ export const Form = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addMessage({
+        dispatch(addMessageWithThunk({
             text: value,
             author: AUTHORS.human,
             messageId: uuidv4(),
