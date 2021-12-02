@@ -1,15 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { getMessagesList } from '../../store/selectors';
 
-// export const MessageList = ({ messages }) => {
 export const MessageList = () => {
-    const state = useSelector(state => state);
+    const messages = useSelector(getMessagesList, shallowEqual);
     const { chatId } = useParams();
 
     return (
         <div>
-            {state.messages[chatId].map(mes => (
+            {messages[chatId].map(mes => (
                 <div key={mes.messageId}>
                     <span>{mes.author}</span>:
                     <span> {mes.text}</span>
