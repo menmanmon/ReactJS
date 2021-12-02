@@ -22,15 +22,20 @@ export const Articles = () => {
     return (
         <>
             <h3>Articles</h3>
-            {isLoading ? <CircularProgress /> :
+            {isLoading ? (
+                <CircularProgress />
+            ) : (
                 <>
                     <button onClick={requestArticles}>REQUEST</button>
-                    {error && <h4>ERROR: {error}</h4>}
-                    <ul>
-                        {articles.map((art) => <li key={art.id}>{art.title}</li>)}
-                    </ul>
+                    {error ? <h4>ERROR: {error}</h4> :
+                        <ul>
+                            {articles.map((art) => (
+                                <li key={art.id}>{art.title}</li>
+                            ))}
+                        </ul>
+                    }
                 </>
-            }
+            )}
         </>
     )
 }
