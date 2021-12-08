@@ -1,25 +1,11 @@
 import { REQURST_STATUS } from "../utils/constants"
 
-export function getChatsList(state) {
-    return state.chats
-}
+export const getChatsList = (state) => state.chats;
+export const getMessagesList = (state) => state.messages;
+export const getPrifile = (state) => state.profile;
+export const selectArticlesList = (state) => state.articles.articlesList;
+export const selectArticlesLoading = (state) => state.articles.request.status === REQURST_STATUS.LOADING;
+export const selectArticlesError = (state) => state.articles.request.error;
+export const selectAuth = (state) => state.profile.authed;
 
-export function getMessagesList(state) {
-    return state.messages
-}
 
-export function getPrifile(state) {
-    return state.profile
-}
-
-export function selectArticlesList(state) {
-    return state.articles.articlesList
-}
-
-export function selectArticlesLoading(state) {
-    return state.articles.request.status === REQURST_STATUS.LOADING 
-}
-
-export function selectArticlesError(state) {
-    return state.articles.request.error
-}

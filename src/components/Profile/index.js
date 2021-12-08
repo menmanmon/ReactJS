@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../../servises/firebase';
 import { changeName, toggleCheckbox } from '../../store/profile/actions';
 import { getPrifile } from '../../store/selectors';
 
@@ -18,6 +19,14 @@ export const Profile = () => {
         e.preventDefault();
         dispatch(changeName(value));
     };
+
+    const handleSignOut = async () => {
+        try {
+            logOut()
+        } catch (err) {
+            console.log(err);
+        }
+    };
     return (
         <div>
             <h3>Profile</h3>
@@ -26,6 +35,7 @@ export const Profile = () => {
                 <input type="text" value={value} onChange={handleChangeText}></input>
                 <input type="submit"></input>
             </form>
+            <button onClick={handleSignOut}>SIGN OUT</button>
         </div>
     );
 }
