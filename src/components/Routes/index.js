@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Link } from "react-router-dom"
 import { PersistGate } from "redux-persist/lib/integration/react"
 import { Articles } from "../Articles"
@@ -11,9 +11,24 @@ import { persistor } from '../../store';
 import { PublicRoute } from '../PublicRoute';
 import { PrivateRoute } from '../PrivateRoute';
 import { SignUp } from '../SignUp';
+import { auth } from '../../servises/firebase';
+import { useDispatch } from 'react-redux';
+import { signIn, signOut } from '../../store/profile/actions';
 
 
 export const Router = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const unsubsctibe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                dispatch(signIn());
+            } else {
+                dispatch(signOut());
+            }
+        });
+        return unsubsctibe
+    }, []);
+
     return (
         <PersistGate persistor={persistor}>
             <BrowserRouter>

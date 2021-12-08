@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from '@mui/material/Button';
 import './ChatsList.css';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addChat, deleteChat } from '../../store/chats/actions';
+import { deleteChat } from '../../store/chats/actions';
 import { addEmptyMessage } from '../../store/messages/actions';
 import { getChatsList } from '../../store/selectors';
+import { onValue, set } from '@firebase/database';
+import { chatsRef, getChatRefById } from '../../servises/firebase';
 
 export const ChatsList = () => {
-    const chats = useSelector(getChatsList, shallowEqual)
+    const [chats, setChats] = useState([]);
+    const chatsList = useSelector(getChatsList, shallowEqual);
     const dispatch = useDispatch();
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState('');
+
+    useEffect(() => {
+        onValue(chatsRef, (chatsSnap) => {
+            const newChats = [];
+
+            chatsSnap.forEach((snap) => {
+                newChats.push(snap.val())
+            });
+            setChats(newChats);
+        });
+    }, []);
+
     const handleChange = (e) => {
         setValue(e.target.value);
     }
@@ -22,8 +37,9 @@ export const ChatsList = () => {
             name: value,
             id: newId
         };
-        dispatch(addChat(newChat));
-        dispatch(addEmptyMessage(newId));
+        set(getChatRefById(newId), newChat)
+        // dispatch(addChat(newChat));
+        // dispatch(addEmptyMessage(newId));
         setValue('');
     }
     const chat = chats.map((chat) =>

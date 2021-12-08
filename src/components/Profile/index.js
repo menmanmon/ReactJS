@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { onValue, set } from '@firebase/database';
+import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../../servises/firebase';
+import { logOut, userRef } from '../../servises/firebase';
 import { changeName, toggleCheckbox } from '../../store/profile/actions';
 import { getPrifile } from '../../store/selectors';
 
@@ -8,6 +9,15 @@ export const Profile = () => {
     const state = useSelector(getPrifile, shallowEqual);
     const [value, setValue] = useState(state.name)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const unsubscribe = onValue(userRef, (snapshot) => {
+            const userData = snapshot.val();
+            dispatch(changeName(userData?.name || ''));
+
+        });
+        return unsubscribe;
+    }, [changeName]);
 
     const handleChangeText = (e) => {
         setValue(e.target.value);
@@ -17,7 +27,8 @@ export const Profile = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(changeName(value));
+        set(userRef, { name: value });
+        // dispatch(changeName(value));
     };
 
     const handleSignOut = async () => {

@@ -14,16 +14,18 @@ export const SignForm = ({ onSubmit, error, loading }) => {
     const hendleSubmit = (e) => {
         e.preventDefault();
         onSubmit(email, pass);
+        setEmail('');
+        setPass('');
     }
 
     return (
         <>
-        <form onSubmit={hendleSubmit}>
-            <input type='email' value={email} onChange={handleChangeEmail} placeholder='email...'></input>
-            <input type='password' value={pass} onChange={handleChangePass} placeholder='password...'></input>
-            <input type='submit' disabled={loading}></input>
-        </form>
-        {error && <h4>{error}</h4>}
+            <form onSubmit={hendleSubmit}>
+                <input type='email' value={email} onChange={handleChangeEmail} placeholder='email...'></input>
+                <input type='password' value={pass} onChange={handleChangePass} placeholder='password...'></input>
+                <input type='submit' disabled={loading}></input>
+            </form>
+            {error && <h4>{error}</h4>}
         </>
     )
 }
