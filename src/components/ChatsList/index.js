@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from '@mui/material/Button';
 import './ChatsList.css';
@@ -7,7 +7,7 @@ import { deleteChat } from '../../store/chats/actions';
 import { addEmptyMessage } from '../../store/messages/actions';
 import { getChatsList } from '../../store/selectors';
 import { onValue, set } from '@firebase/database';
-import { chatsRef, getChatRefById } from '../../servises/firebase';
+import { chatsRef, getChatMsgsRefById, getChatRefById } from '../../servises/firebase';
 
 export const ChatsList = () => {
     const [chats, setChats] = useState([]);
@@ -37,7 +37,8 @@ export const ChatsList = () => {
             name: value,
             id: newId
         };
-        set(getChatRefById(newId), newChat)
+        set(getChatMsgsRefById(newId), { empty: true });
+        set(getChatRefById(newId), newChat);
         // dispatch(addChat(newChat));
         // dispatch(addEmptyMessage(newId));
         setValue('');

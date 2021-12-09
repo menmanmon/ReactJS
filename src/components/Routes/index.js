@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Link } from "react-router-dom"
 import { PersistGate } from "redux-persist/lib/integration/react"
 import { Articles } from "../Articles"
@@ -11,13 +11,16 @@ import { persistor } from '../../store';
 import { PublicRoute } from '../PublicRoute';
 import { PrivateRoute } from '../PrivateRoute';
 import { SignUp } from '../SignUp';
-import { auth } from '../../servises/firebase';
+import { auth, messagesRef } from '../../servises/firebase';
 import { useDispatch } from 'react-redux';
 import { signIn, signOut } from '../../store/profile/actions';
+import { onValue } from '@firebase/database';
 
 
 export const Router = () => {
+    const [msgs, setMsgs] = useState({});
     const dispatch = useDispatch();
+
     useEffect(() => {
         const unsubsctibe = auth.onAuthStateChanged((user) => {
             if (user) {
@@ -27,6 +30,17 @@ export const Router = () => {
             }
         });
         return unsubsctibe
+    }, []);
+
+    useEffect(() => {
+        onValue(messagesRef, (snapshot) => {
+            const newMsgs = {};
+            snapshot.forEach((chatMsgsSnap) => {
+                newMsgs[chatMsgsSnap.key] = chatMsgsSnap.val().messages || {};
+            });
+            setMsgs(newMsgs);
+        });
+
     }, []);
 
     return (
@@ -66,7 +80,7 @@ export const Router = () => {
                         />
                         <Route path=':chatId' element={
                             <PrivateRoute>
-                                <Chats />
+                                <Chats msgs={msgs} />
                             </PrivateRoute>
                         }
                         />
