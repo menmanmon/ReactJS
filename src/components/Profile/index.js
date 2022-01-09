@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { logOut, userRef } from '../../servises/firebase';
 import { changeName, toggleCheckbox } from '../../store/profile/actions';
-import { getPrifile } from '../../store/selectors';
+import { getProfile } from '../../store/selectors';
 
 export const Profile = () => {
-    const state = useSelector(getPrifile, shallowEqual);
+    const state = useSelector(getProfile, shallowEqual);
     const [value, setValue] = useState(state.name)
     const dispatch = useDispatch();
 

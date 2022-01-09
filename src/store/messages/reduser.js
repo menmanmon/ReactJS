@@ -12,8 +12,11 @@ export const messagesReduser = (state = initialMessages, { type, payload }) => {
                 author: payload.author,
                 messageId: payload.messageId,
             }
-            let chatId = payload.chatId;
-            return { ...state, [chatId]: [...state[chatId], messageInfo] };
+            // let chatId = payload.chatId;
+            // console.log(payload.chatId);
+            return { ...state, [payload.chatId]: [...state[payload.chatId], messageInfo] };
+            // return { ...state, [payload.chatId]: [messageInfo] };
+            // return { ...state, [payload.chatId]: [...state[payload.chatId], messageInfo] };
         case ADD_EMPTY_MESSAGE:
             return { ...state, [payload]: [] }
         case DELETE_CHAT:
