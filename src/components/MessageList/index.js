@@ -5,7 +5,6 @@ import { useParams } from 'react-router';
 export const MessageList = ({msgs}) => {
     const state = useSelector(state => state);
     const { chatId } = useParams();
-    console.log(msgs);
     return (
         <div>
             {msgs.map((mes) => (
