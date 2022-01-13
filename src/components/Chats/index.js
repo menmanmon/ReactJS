@@ -3,31 +3,16 @@ import { MessageList } from "../MessageList";
 import { ChatsList } from "../ChatsList";
 import "./Chats.css";
 import { Navigate, useParams } from "react-router";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getMessagesList } from "../../store/selectors";
-import { getChatMsgsListRefById } from "../../servises/firebase";
+import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
-import { push } from "firebase/database";
 import { addMessageWithFb } from "../../store/messages/actions";
+import { getMessagesList } from "../../store/selectors";
 
-export const Chats = ({ msgs }) => {
+export const Chats = () => {
+  const messages = useSelector(getMessagesList);
+
   const { chatId } = useParams();
   const dispatch = useDispatch();
-  const messages = useSelector(getMessagesList, shallowEqual);
-
-  //   const handleSendMessage = useCallback(
-  //     (newMessage) => {
-  //       push(getChatMsgsListRefById(chatId), newMessage);
-  //     },
-  //     [chatId]
-  //   );
-
-  //   const handleSendMessage = useCallback(
-  //     (newMessage) => {
-  //       dispatch(addMessageWithFb(chatId, newMessage));
-  //     },
-  //     [chatId]
-  //   );
   const handleSendMessage = useCallback(
     (newMessage) => {
       dispatch(addMessageWithFb(newMessage));
@@ -35,14 +20,7 @@ export const Chats = ({ msgs }) => {
     [chatId]
   );
 
-  //   const handleSendMessage = useCallback(
-  //     (newMessage) => {
-  //       dispatch(addMessageWithFirebase(chatId, newMessage));
-  //     },
-  //     [chatId]
-  //   );
-
-  if (!msgs[chatId]) {
+  if (!messages.payload[chatId]) {
     return <Navigate replace to="/chats" />;
   }
 
@@ -50,7 +28,7 @@ export const Chats = ({ msgs }) => {
     <div className="app">
       <ChatsList />
       <div className="chat">
-        <MessageList msgs={msgs[chatId]} />
+        <MessageList />
         <Form onSendMessage={handleSendMessage} />
       </div>
     </div>

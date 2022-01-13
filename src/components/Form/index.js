@@ -6,9 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Input from "@mui/material/Input";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { addMessageWithThunk, initMessageTracking } from "../../store/messages/actions";
-import { getChatMsgsListRefById } from "../../servises/firebase";
-import { set } from "firebase/database";
+import { initMessageTracking } from "../../store/messages/actions";
 
 export const Form = ({ onSendMessage }) => {
   const { chatId } = useParams();
@@ -18,17 +16,6 @@ export const Form = ({ onSendMessage }) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     dispatch(addMessageWithThunk({
-  //         text: value,
-  //         author: AUTHORS.human,
-  //         messageId: uuidv4(),
-  //         chatId: chatId,
-  //     }))
-  //     setValue("");
-  //     inputRef.current?.focus();
-  //   };
   const handleSubmit = (e) => {
     e.preventDefault();
     onSendMessage({
@@ -42,7 +29,7 @@ export const Form = ({ onSendMessage }) => {
   };
 
   useEffect(() => {
-      dispatch(initMessageTracking(chatId));
+      dispatch(initMessageTracking());
   }, []);
 
   const inputRef = useRef(null);
