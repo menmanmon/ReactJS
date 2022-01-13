@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AUTHORS } from "../../utils/constants";
 import Button from "@mui/material/Button";
@@ -6,7 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Input from "@mui/material/Input";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { addMessageWithThunk } from "../../store/messages/actions";
+import { addMessageWithThunk, initMessageTracking } from "../../store/messages/actions";
 import { getChatMsgsListRefById } from "../../servises/firebase";
 import { set } from "firebase/database";
 
@@ -40,6 +40,10 @@ export const Form = ({ onSendMessage }) => {
     setValue("");
     inputRef.current?.focus();
   };
+
+  useEffect(() => {
+      dispatch(initMessageTracking(chatId));
+  }, []);
 
   const inputRef = useRef(null);
   return (
