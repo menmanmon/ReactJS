@@ -1,0 +1,6 @@
+.chatsList{
+    width: 130px;
+}
+.chatName {
+    display: flex;
+}
